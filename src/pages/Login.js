@@ -20,6 +20,8 @@ const Login = () => {
         password,
       });
       if (res.status === 200) {
+        console.log("RES", res.data.id);
+        localStorage.setItem("id", res.data.id);
         return navigate("/dashboard");
       }
       console.log(res);

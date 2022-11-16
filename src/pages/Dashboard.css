@@ -1,0 +1,37 @@
+
+.main-page{
+    display: flex;
+    
+}
+
+.chat-window{
+    height: 40px;
+    padding: 1rem;
+    background-color: #00b4fc;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.text-field{
+    position: absolute;
+    bottom: 2%;
+    width: 60%;
+    height: 8%;
+    background-color: rgb(243, 241, 241);
+    border: 0;
+}
+::placeholder{
+    font-size: 1.2rem;
+}
+.send{
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
+    padding: 1.2em 1em;
+    width: 8%;
+    border: 0;
+    background-color: #00b4fc;
+    color: #fff;
+    font-size: 1rem;
+}

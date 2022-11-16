@@ -6,10 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(181 211 255);
   min-height: 100vh;
-  display: grid;
-  place-items:center ;
 }
 .link{
   text-decoration: none;
@@ -44,9 +41,9 @@ form{
 }
 
 .right-side{
-  background-image:url("../src/register.jpg") ;
-  background-size: 100%; 
-
+  /* background-image:url("../src/register.jpg") ;
+  background-size: 100%;  */
+  background-color: rgb(0 86 250);
   width: 50%;
   height: 100%;
 

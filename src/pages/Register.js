@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
-// import Box from "@mui/material/Box";
 
 const Register = () => {
   const [firstname, setFirstname] = useState("");
