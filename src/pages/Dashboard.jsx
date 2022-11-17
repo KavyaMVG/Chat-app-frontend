@@ -1,15 +1,12 @@
-import React from 'react'
+import React from "react";
 
-
-
-import "./Dashboard.css"
-import Chats from '../components/Chats';
-import ChatWindow from '../components/ChatWindow';
+import "./Dashboard.css";
+import Chats from "../components/Chats";
+import ChatWindow from "../components/ChatWindow";
 
 const Dashboard = () => {
   // const [email, setEmail] = useState("");
   // const [username, setUsername] = useState("");
-  
 
   // const userContact = async (e) => {
   //   e.preventDefault();
@@ -22,8 +19,8 @@ const Dashboard = () => {
   //       username,
   //     });
   //     if (res.status === 201) {
-        
-  //       setContactLists(prev => [...prev,{ 
+
+  //       setContactLists(prev => [...prev,{
   //         userId,
   //         email,
   //         username
@@ -35,13 +32,12 @@ const Dashboard = () => {
   //   }
   // };
 
-
   return (
-    <div className='main-page'>
+    <div className="main-page">
       <Chats />
-      <ChatWindow/>
-    </div>)
-     
-}
+      <ChatWindow />
+    </div>
+  );
+};
 
-export default Dashboard
+export default Dashboard;
