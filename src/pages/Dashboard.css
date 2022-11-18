@@ -3,45 +3,63 @@
     display: flex;
     
 }
-
-.chat-window{
-    height: 40px;
+.header{
+    height: 5vh;
     padding: 1rem;
     background-color: #00b4fc;
     display: flex;
     align-items: center;
     gap: 1rem;
+    color: white;
+
 }
-.chats{
+.chat-window{
+    position: relative;
+    width: 100%;
+    
+}
+.messages{
+    overflow-y: scroll;
+    height:80vh;
+    display: flex;
+    flex-direction: column;
+}
+.chat{
+   background-color: blue;
+   color: #fff;
+   padding: 0.5rem 1rem;   
+   margin: .5rem;
+   width: fit-content;
+    border-radius: 20px;
+    align-self: flex-end;
+}
+.chat-field{
     position: absolute;
-    bottom: 50%;
-    color: black;
-    right: 2%;
+    bottom: 3%;
+    width: 100%;
 }
 
 .text-field{
-    position: absolute;
-    bottom: 2%;
-    width: 60%;
-    height: 8%;
     background-color: rgb(243, 241, 241);
     border: 0;
     font-size: 1rem;
+    padding: 1.25rem;
 }
+
 ::placeholder{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 .send{
     position: absolute;
     bottom: 2%;
-    right: 2%;
-    padding: 1.2em 1em;
-    width: 8%;
+    right: 0;
+    padding: 1.2em 1.5em;
     border: 0;
     background-color: #00b4fc;
     color: #fff;
     font-size: 1rem;
 }
+
 button:disabled,
 button[disabled] {
     opacity: 0.5;
