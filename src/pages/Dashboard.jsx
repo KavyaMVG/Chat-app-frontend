@@ -33,10 +33,10 @@ const Dashboard = () => {
   // };
 
   return (
-    <div className="main-page">
+    <>
       <Chats />
       <ChatWindow />
-    </div>
+    </>
   );
 };
 

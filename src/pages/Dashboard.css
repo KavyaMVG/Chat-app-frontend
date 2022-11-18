@@ -12,6 +12,12 @@
     align-items: center;
     gap: 1rem;
 }
+.chats{
+    position: absolute;
+    bottom: 50%;
+    color: black;
+    right: 2%;
+}
 
 .text-field{
     position: absolute;
@@ -20,6 +26,7 @@
     height: 8%;
     background-color: rgb(243, 241, 241);
     border: 0;
+    font-size: 1rem;
 }
 ::placeholder{
     font-size: 1.2rem;
@@ -34,4 +41,9 @@
     background-color: #00b4fc;
     color: #fff;
     font-size: 1rem;
+}
+button:disabled,
+button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
