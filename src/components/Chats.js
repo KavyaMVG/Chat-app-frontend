@@ -37,7 +37,14 @@ export default function Chats() {
     const getContacts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5500/contacts/lists?userId=63748ec24e47dcb7b39641e2"
+          `http://localhost:5500/contact/user?userId=${localStorage.getItem(
+            "id"
+          )}`,
+          {
+            headers: {
+              Authorization: localStorage.getItem("auth"),
+            },
+          }
         );
         setContactLists(response.data.userContact);
       } catch (err) {
@@ -57,12 +64,11 @@ export default function Chats() {
       userId,
     };
     try {
-      const response = await axios.post("http://localhost:5500/contacts/add", {
+      const response = await axios.post("http://localhost:5500/contact/add", {
         username: userName,
         email,
         userId,
       });
-      console.log("res:", response);
       if (response.status === 201) {
         try {
           setContactLists((prev) => [...prev, data]);

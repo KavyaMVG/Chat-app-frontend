@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, TextField } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState();
-  const [errorMessage, setErrorMessage] = useState();
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const loginDetails = async (e) => {
@@ -15,21 +15,26 @@ const Login = () => {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:5500/login", {
+      const res = await axios.post("http://localhost:5500/user/login", {
         email,
         password,
       });
       if (res.status === 200) {
-        console.log("RES", res);
-        localStorage.setItem("id", res.data.id);
+        const { data } = res;
+        localStorage.setItem("id", data.user.id);
+        localStorage.setItem("auth", data.user.token);
         return navigate("/dashboard");
       }
-      console.log(res);
     } catch (err) {
       if (err.response) setErrorMessage(err.response.data.msg);
     }
   };
 
+  useEffect(() => {
+    if (localStorage.getItem("auth") && localStorage.getItem("id")) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
   return (
     <div className="container">
       <div className="d-flex">

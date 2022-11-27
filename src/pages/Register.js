@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
@@ -37,6 +37,11 @@ const Register = () => {
 
   //   const userDetails = ()
 
+  useEffect(() => {
+    if (localStorage.getItem("auth") && localStorage.getItem("id")) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
   return (
     <div className="container">
       <div className="d-flex">

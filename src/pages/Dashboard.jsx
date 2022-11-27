@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "./Dashboard.css";
 import Chats from "../components/Chats";
 import ChatWindow from "../components/ChatWindow";
-
+import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
+  const navigate = useNavigate();
   // const [email, setEmail] = useState("");
   // const [username, setUsername] = useState("");
 
@@ -31,6 +32,12 @@ const Dashboard = () => {
   //     // if (err.response) setErrorMessage(err.response.data.msg);
   //   }
   // };
+
+  useEffect(() => {
+    if (!(localStorage.getItem("auth") && localStorage.getItem("id"))) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   return (
     <div className="main-page">
