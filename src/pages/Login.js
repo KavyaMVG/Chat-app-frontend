@@ -15,7 +15,7 @@ const Login = () => {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:5500/login", {
+      const res = await axios.post("http://localhost:5500/user/login", {
         email,
         password,
       });

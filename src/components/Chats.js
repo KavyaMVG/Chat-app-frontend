@@ -27,17 +27,18 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-export default function Chats() {
+export default function Chats({ setReceiver, setChatMessages }) {
   const [contactsLists, setContactLists] = useState([]);
   const [open, setOpen] = useState(false);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
+  const userId = localStorage.getItem("id");
 
   useEffect(() => {
     const getContacts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5500/contacts/lists?userId=63748ec24e47dcb7b39641e2"
+          "http://localhost:5500/contact/user?userId=63748ec24e47dcb7b39641e2"
         );
         setContactLists(response.data.userContact);
       } catch (err) {
@@ -50,14 +51,13 @@ export default function Chats() {
   const addContact = async (e) => {
     e.preventDefault();
 
-    const userId = localStorage.getItem("id");
     const data = {
       username: userName,
       email,
       userId,
     };
     try {
-      const response = await axios.post("http://localhost:5500/contacts/add", {
+      const response = await axios.post("http://localhost:5500/contact/add", {
         username: userName,
         email,
         userId,
@@ -79,6 +79,16 @@ export default function Chats() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleCurrentReceiver = async (contact) => {
+    setReceiver(contact);
+    const response = await axios.get("http://localhost:5500/chat/oneToOne", {
+      params: {
+        senderId: userId,
+        receiverId: contact.userId,
+      },
+    });
+    setChatMessages(response.data.chats);
+  };
   return (
     <>
       <List
@@ -151,7 +161,10 @@ export default function Chats() {
         {contactsLists.map((contact, index) => {
           return (
             <div key={index}>
-              <ListItem alignItems="flex-start">
+              <ListItem
+                onClick={() => handleCurrentReceiver(contact)}
+                alignItems="flex-start"
+              >
                 <ListItemAvatar>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                 </ListItemAvatar>

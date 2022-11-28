@@ -5,15 +5,20 @@ import { useState } from "react";
 
 import "../pages/Dashboard.css";
 
-export default function ChatWindow() {
+export default function ChatWindow({
+  receiver,
+  setChatMessages,
+  chatMessages,
+}) {
   const [msg, setMsg] = useState("");
-  const [chatMessages, setChatMessages] = useState([]);
 
   const sendMessage = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5500/user/chats", {
+      const response = await axios.post("http://localhost:5500/chat/add", {
         msg,
+        receiverId: receiver.userId,
+        senderId: localStorage.getItem("id"),
       });
       if (response.status === 201) {
         setChatMessages((prev) => [...prev, msg]);
@@ -28,16 +33,18 @@ export default function ChatWindow() {
       <div className="chat-window">
         <div className="header">
           <Avatar alt="Remy Sharp" src="" />
-          <span>Kavya</span>
+          <span>{receiver.username}</span>
         </div>
         <div className="messages">
-          {chatMessages.map((message, index) => {
-            return (
-              <div key={index} className="chat">
-                {message}
-              </div>
-            );
-          })}
+          {console.log(chatMessages)}
+          {chatMessages &&
+            chatMessages.map((data, index) => {
+              return (
+                <div key={index} className="chat">
+                  {data.msg}
+                </div>
+              );
+            })}
         </div>
         <form className="chat-field" onSubmit={sendMessage}>
           <input

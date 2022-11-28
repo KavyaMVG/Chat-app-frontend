@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./Dashboard.css";
 import Chats from "../components/Chats";
@@ -31,11 +31,17 @@ const Dashboard = () => {
   //     // if (err.response) setErrorMessage(err.response.data.msg);
   //   }
   // };
+  const [receiver, setReceiver] = useState({});
+  const [chatMessages, setChatMessages] = useState([]);
 
   return (
     <div className="main-page">
-      <Chats />
-      <ChatWindow />
+      <Chats setReceiver={setReceiver} setChatMessages={setChatMessages} />
+      <ChatWindow
+        receiver={receiver}
+        chatMessages={chatMessages}
+        setChatMessages={setChatMessages}
+      />
     </div>
   );
 };
