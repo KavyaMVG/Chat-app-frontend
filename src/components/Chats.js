@@ -84,7 +84,7 @@ export default function Chats({ setReceiver, setChatMessages }) {
     const response = await axios.get("http://localhost:5500/chat/oneToOne", {
       params: {
         senderId: userId,
-        receiverId: contact.userId,
+        receiverId: contact._id,
       },
     });
     setChatMessages(response.data.chats);
