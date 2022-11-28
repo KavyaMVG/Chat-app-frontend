@@ -15,6 +15,7 @@ import Modal from "@mui/material/Modal";
 import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -27,11 +28,14 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-export default function Chats() {
+export default function Chats({ setReceiver, setChatMessages }) {
   const [contactsLists, setContactLists] = useState([]);
   const [open, setOpen] = useState(false);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState(false);
+  const userId = localStorage.getItem("id");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getContacts = async () => {
@@ -54,10 +58,14 @@ export default function Chats() {
     getContacts();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
   const addContact = async (e) => {
     e.preventDefault();
 
-    const userId = localStorage.getItem("id");
     const data = {
       username: userName,
       email,
@@ -79,12 +87,26 @@ export default function Chats() {
         return;
       }
     } catch (err) {
+      setError(true);
       console.log(err);
     }
   };
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setError(false);
+    setOpen(false);
+  };
 
+  const handleCurrentReceiver = async (contact) => {
+    setReceiver(contact);
+    const response = await axios.get("http://localhost:5500/chat/oneToOne", {
+      params: {
+        senderId: userId,
+        receiverId: contact._id,
+      },
+    });
+    setChatMessages(response.data.chats);
+  };
   return (
     <>
       <List
@@ -101,6 +123,9 @@ export default function Chats() {
             onClick={handleOpen}
             icon={<PersonAddIcon />}
           />
+          <Button variant="outlined" color="error" onClick={handleLogout}>
+            Logout
+          </Button>
           <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
@@ -109,7 +134,7 @@ export default function Chats() {
             closeAfterTransition
             BackdropComponent={Backdrop}
             BackdropProps={{
-              timeout: 500,
+              timeout: 200,
             }}
           >
             <Fade in={open}>
@@ -130,12 +155,19 @@ export default function Chats() {
                     id="outlined-multiline-flexible"
                     label="Email"
                     required
-                    type="text"
+                    type="email"
                     style={{ margin: "1rem" }}
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
                   />
+                  {error ? (
+                    <p style={{ color: "red", textAlign: "center" }}>
+                      Error adding contact
+                    </p>
+                  ) : (
+                    ""
+                  )}
                   <Button
                     type="submit"
                     variant="outlined"
@@ -157,7 +189,10 @@ export default function Chats() {
         {contactsLists.map((contact, index) => {
           return (
             <div key={index}>
-              <ListItem alignItems="flex-start">
+              <ListItem
+                onClick={() => handleCurrentReceiver(contact)}
+                alignItems="flex-start"
+              >
                 <ListItemAvatar>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                 </ListItemAvatar>
