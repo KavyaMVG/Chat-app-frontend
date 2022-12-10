@@ -15,6 +15,7 @@ import Modal from "@mui/material/Modal";
 import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -32,13 +33,22 @@ export default function Chats({ setReceiver, setChatMessages }) {
   const [open, setOpen] = useState(false);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState(false);
   const userId = localStorage.getItem("id");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getContacts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5500/contact/user?userId=63748ec24e47dcb7b39641e2"
+          `http://localhost:5500/contact/user?userId=${localStorage.getItem(
+            "id"
+          )}`,
+          {
+            headers: {
+              Authorization: localStorage.getItem("auth"),
+            },
+          }
         );
         setContactLists(response.data.userContact);
       } catch (err) {
@@ -47,6 +57,11 @@ export default function Chats({ setReceiver, setChatMessages }) {
     };
     getContacts();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
   const addContact = async (e) => {
     e.preventDefault();
@@ -62,7 +77,6 @@ export default function Chats({ setReceiver, setChatMessages }) {
         email,
         userId,
       });
-      console.log("res:", response);
       if (response.status === 201) {
         try {
           setContactLists((prev) => [...prev, data]);
@@ -73,11 +87,15 @@ export default function Chats({ setReceiver, setChatMessages }) {
         return;
       }
     } catch (err) {
+      setError(true);
       console.log(err);
     }
   };
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setError(false);
+    setOpen(false);
+  };
 
   const handleCurrentReceiver = async (contact) => {
     setReceiver(contact);
@@ -105,6 +123,9 @@ export default function Chats({ setReceiver, setChatMessages }) {
             onClick={handleOpen}
             icon={<PersonAddIcon />}
           />
+          <Button variant="outlined" color="error" onClick={handleLogout}>
+            Logout
+          </Button>
           <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
@@ -113,7 +134,7 @@ export default function Chats({ setReceiver, setChatMessages }) {
             closeAfterTransition
             BackdropComponent={Backdrop}
             BackdropProps={{
-              timeout: 500,
+              timeout: 200,
             }}
           >
             <Fade in={open}>
@@ -134,12 +155,19 @@ export default function Chats({ setReceiver, setChatMessages }) {
                     id="outlined-multiline-flexible"
                     label="Email"
                     required
-                    type="text"
+                    type="email"
                     style={{ margin: "1rem" }}
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
                   />
+                  {error ? (
+                    <p style={{ color: "red", textAlign: "center" }}>
+                      Error adding contact
+                    </p>
+                  ) : (
+                    ""
+                  )}
                   <Button
                     type="submit"
                     variant="outlined"
