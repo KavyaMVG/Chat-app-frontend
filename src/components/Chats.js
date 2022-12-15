@@ -14,6 +14,12 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Modal from "@mui/material/Modal";
 import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
+
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 
@@ -29,6 +35,7 @@ const style = {
   p: 4,
 };
 export default function Chats({ setReceiver, setChatMessages }) {
+  const [value, setValue] = React.useState("1");
   const [contactsLists, setContactLists] = useState([]);
   const [open, setOpen] = useState(false);
   const [userName, setUserName] = useState("");
@@ -61,6 +68,10 @@ export default function Chats({ setReceiver, setChatMessages }) {
   const handleLogout = () => {
     localStorage.clear();
     navigate("/login");
+  };
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
 
   const addContact = async (e) => {
@@ -102,7 +113,7 @@ export default function Chats({ setReceiver, setChatMessages }) {
     const response = await axios.get("http://localhost:5500/chat/oneToOne", {
       params: {
         senderId: userId,
-        receiverId: contact._id,
+        users: [userId, contact._id],
       },
     });
     setChatMessages(response.data.chats);
@@ -117,13 +128,12 @@ export default function Chats({ setReceiver, setChatMessages }) {
         }}
       >
         <div>
-          <BottomNavigationAction
-            label="person"
-            value="person"
-            onClick={handleOpen}
-            icon={<PersonAddIcon />}
-          />
-          <Button variant="outlined" color="error" onClick={handleLogout}>
+          <Button
+            style={{ fontSize: ".7rem", color: "#fff", backgroundColor: "red" }}
+            variant="outlined"
+            color="error"
+            onClick={handleLogout}
+          >
             Logout
           </Button>
           <Modal
@@ -186,36 +196,55 @@ export default function Chats({ setReceiver, setChatMessages }) {
             </Fade>
           </Modal>
         </div>
-        {contactsLists.map((contact, index) => {
-          return (
-            <div key={index}>
-              <ListItem
-                onClick={() => handleCurrentReceiver(contact)}
-                alignItems="flex-start"
-              >
-                <ListItemAvatar>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={contact.username}
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: "inline" }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        {contact.email}
-                      </Typography>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-              <Divider variant="inset" component="li" />
-            </div>
-          );
-        })}
+        <TabContext value={value}>
+          <TabList onChange={handleChange}>
+            <Tab label="Contacts" value="1" />
+            <Tab label="Groups" value="2" />
+          </TabList>
+          <TabPanel style={{ padding: 0 }} value="1">
+            <BottomNavigationAction
+              style={{ float: "right" }}
+              label="person"
+              value="person"
+              onClick={handleOpen}
+              icon={<PersonAddIcon />}
+            />
+            {contactsLists.map((contact, index) => {
+              return (
+                <div key={index}>
+                  <ListItem
+                    onClick={() => handleCurrentReceiver(contact)}
+                    alignItems="flex-start"
+                  >
+                    <ListItemAvatar>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="/static/images/avatar/1.jpg"
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={contact.username}
+                      secondary={
+                        <React.Fragment>
+                          <Typography
+                            sx={{ display: "inline" }}
+                            component="span"
+                            variant="body2"
+                            color="text.primary"
+                          >
+                            {contact.email}
+                          </Typography>
+                        </React.Fragment>
+                      }
+                    />
+                  </ListItem>
+                  <Divider variant="inset" component="li" />
+                </div>
+              );
+            })}
+          </TabPanel>
+          <TabPanel value="2">Groups</TabPanel>
+        </TabContext>
       </List>
     </>
   );

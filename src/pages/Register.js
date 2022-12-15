@@ -20,7 +20,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5500/register", {
+      const res = await axios.post("http://localhost:5500/user/register", {
         firstname,
         lastname,
         email,

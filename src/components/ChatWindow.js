@@ -15,16 +15,14 @@ export default function ChatWindow({
   const sendMessage = async (e) => {
     e.preventDefault();
     try {
+      const senderId = localStorage.getItem("id");
       const data = {
         msg,
-        receiverId: receiver._id,
-        senderId: localStorage.getItem("id"),
+        users: [senderId, receiver._id],
+        senderId,
       };
-      const response = await axios.post("http://localhost:5500/chat/add", {
-        msg,
-        receiverId: receiver._id,
-        senderId: localStorage.getItem("id"),
-      });
+      console.log(data);
+      const response = await axios.post("http://localhost:5500/chat/add", data);
       if (response.status === 201) {
         setChatMessages((prev) => [...prev, data]);
         setMsg("");
