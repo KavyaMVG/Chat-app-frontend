@@ -18,7 +18,7 @@ export default function ChatWindow({
       const senderId = localStorage.getItem("id");
       const data = {
         msg,
-        users: [senderId, receiver._id],
+        receiverId: receiver.id,
         senderId,
       };
       console.log(data);

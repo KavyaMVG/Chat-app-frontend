@@ -78,16 +78,17 @@ export default function Chats({ setReceiver, setChatMessages }) {
     e.preventDefault();
 
     const data = {
-      username: userName,
-      email,
       userId,
-    };
-    try {
-      const response = await axios.post("http://localhost:5500/contact/add", {
+      contact: {
         username: userName,
         email,
-        userId,
-      });
+      },
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:5500/contact/add",
+        data
+      );
       if (response.status === 201) {
         try {
           setContactLists((prev) => [...prev, data]);
@@ -113,7 +114,7 @@ export default function Chats({ setReceiver, setChatMessages }) {
     const response = await axios.get("http://localhost:5500/chat/oneToOne", {
       params: {
         senderId: userId,
-        users: [userId, contact._id],
+        receiverId: contact.id,
       },
     });
     setChatMessages(response.data.chats);
@@ -209,7 +210,7 @@ export default function Chats({ setReceiver, setChatMessages }) {
               onClick={handleOpen}
               icon={<PersonAddIcon />}
             />
-            {contactsLists.map((contact, index) => {
+            {contactsLists.map(({ contact }, index) => {
               return (
                 <div key={index}>
                   <ListItem
