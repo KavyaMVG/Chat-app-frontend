@@ -122,7 +122,12 @@ export default function Chats({ setReceiver, setChatMessages }) {
   return (
     <>
       <List
-        style={{ overflowY: "scroll", height: "100vh" }}
+        style={{
+          overflowY: "scroll",
+          height: "100vh",
+          boxShadow: "0 0 6px 0 grey",
+          width: "40%",
+        }}
         sx={{
           bgcolor: "background.paper",
           width: "40%",

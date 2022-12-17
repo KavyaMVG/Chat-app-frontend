@@ -10,9 +10,22 @@ body {
 }
 .link {
   text-decoration: none;
+  color: #000;
 }
+.firstname {
+  color: #f2f2f2;
+}
+
 img {
   max-width: 100%;
+}
+.login {
+  width: 30vw;
+}
+
+.App {
+  background-color: #d9d0c9;
+  height: 100vh;
 }
 
 code {
@@ -28,29 +41,23 @@ form {
 }
 
 .d-flex {
-  background-color: #fff;
+  background-color: #d9d0c9;
   color: black;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
 }
 .left-side {
-  width: 50%;
+  background-color: #fff;
   padding: 2rem;
+  border-radius: 5px;
+}
+#outlined-multiline-flexible {
+  color: #f2f2f2;
 }
 
-.right-side {
-  /* background-image:url("../src/register.jpg") ;
-  background-size: 100%;  */
-  background-color: rgb(0 86 250);
-  width: 50%;
-  height: 100%;
-}
 .name {
   display: flex;
   margin: 0.8rem 1rem;
-  width: 95%;
   gap: 1.5rem;
 }
 .text {
@@ -58,7 +65,12 @@ form {
 }
 .title {
   margin-left: 1rem;
+  color: #000;
 }
+.hide {
+  display: none;
+}
+
 .main-title {
   text-align: center;
   color: #fff;

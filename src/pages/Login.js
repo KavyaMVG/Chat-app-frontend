@@ -38,7 +38,7 @@ const Login = () => {
   return (
     <div className="container">
       <div className="d-flex">
-        <div className="left-side">
+        <div className="left-side login">
           <h1 className="title">Login</h1>
 
           <form onSubmit={loginDetails}>
@@ -70,7 +70,7 @@ const Login = () => {
               value="Submit"
               style={{
                 margin: ".5rem 1rem",
-                backgroundColor: "rgb(0 86 250)",
+                backgroundColor: "#25a876",
                 color: "#fff",
                 padding: ".8rem 0",
               }}
@@ -84,9 +84,6 @@ const Login = () => {
               </Link>
             </div>
           </form>
-        </div>
-        <div className="right-side">
-          <h1 className="main-title">Welcome to Chat App</h1>
         </div>
       </div>
     </div>

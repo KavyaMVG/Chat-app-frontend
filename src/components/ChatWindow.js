@@ -11,9 +11,12 @@ export default function ChatWindow({
   chatMessages,
 }) {
   const [msg, setMsg] = useState("");
+  console.log("data", receiver);
 
   const sendMessage = async (e) => {
     e.preventDefault();
+    console.log("RECEIVER", receiver.id);
+
     try {
       const senderId = localStorage.getItem("id");
       const data = {
@@ -21,8 +24,9 @@ export default function ChatWindow({
         receiverId: receiver.id,
         senderId,
       };
-      console.log(data);
+
       const response = await axios.post("http://localhost:5500/chat/add", data);
+      console.log("RESPONSE", response);
       if (response.status === 201) {
         setChatMessages((prev) => [...prev, data]);
         setMsg("");
@@ -33,13 +37,16 @@ export default function ChatWindow({
   };
   return (
     <>
-      <div className="chat-window">
+      <div
+        className={`chat-window ${
+          Object.keys(receiver).length === 0 ? "hide" : "block"
+        }`}
+      >
         <div className="header">
           <Avatar alt="Remy Sharp" src="" />
           <span>{receiver.username}</span>
         </div>
         <div className="messages">
-          {console.log(chatMessages)}
           {chatMessages &&
             chatMessages.map((data, index) => {
               return (
@@ -50,16 +57,18 @@ export default function ChatWindow({
             })}
         </div>
         <form className="chat-field" onSubmit={sendMessage}>
-          <input
-            className="text-field"
-            placeholder="Type here..."
-            type="text"
-            value={msg}
-            onChange={(e) => setMsg(e.target.value)}
-          ></input>
-          <button disabled={!msg} className="send">
-            Send
-          </button>
+          <div className="send-btn">
+            <input
+              className="text-field"
+              placeholder="Type here..."
+              type="text"
+              value={msg}
+              onChange={(e) => setMsg(e.target.value)}
+            ></input>
+            <button disabled={!msg} className="send">
+              Send
+            </button>
+          </div>
         </form>
       </div>
     </>

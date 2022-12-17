@@ -1,67 +1,69 @@
+.main-page {
+  display: flex;
+}
+.header {
+  height: 5vh;
+  padding: 1rem;
+  background-color: #eff2f5;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #000;
+}
+.chat-window {
+  position: relative;
+  width: 100%;
+}
+.messages {
+  overflow-y: scroll;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+.chat {
+  background-color: #d9fdd2;
+  color: #000;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  width: fit-content;
+  border-radius: 20px;
+  align-self: flex-end;
+}
+.chat-field {
+  position: absolute;
+  bottom: 3%;
+  width: 100%;
+}
+.send-btn {
+  background-color: #eff2f5;
+  padding: 1rem;
+}
+.text-field {
+  background-color: #fff;
+  border: 0;
+  font-size: 1rem;
+  padding: 0.8rem;
+  color: #000;
+  width: 90%;
+  border-radius: 5px;
+}
 
-.main-page{
-    display: flex;
-    
+::placeholder {
+  font-size: 1.1rem;
 }
-.header{
-    height: 5vh;
-    padding: 1rem;
-    background-color: #00b4fc;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    color: white;
-
-}
-.chat-window{
-    position: relative;
-    width: 100%;
-    
-}
-.messages{
-    overflow-y: scroll;
-    height:80vh;
-    display: flex;
-    flex-direction: column;
-}
-.chat{
-   background-color: blue;
-   color: #fff;
-   padding: 0.5rem 1rem;   
-   margin: .5rem;
-   width: fit-content;
-    border-radius: 20px;
-    align-self: flex-end;
-}
-.chat-field{
-    position: absolute;
-    bottom: 3%;
-    width: 100%;
-}
-
-.text-field{
-    background-color: rgb(243, 241, 241);
-    border: 0;
-    font-size: 1rem;
-    padding: 1.25rem;
-}
-
-::placeholder{
-    font-size: 1.1rem;
-}
-.send{
-    position: absolute;
-    bottom: 2%;
-    right: 0;
-    padding: 1.2em 1.5em;
-    border: 0;
-    background-color: #00b4fc;
-    color: #fff;
-    font-size: 1rem;
+.send {
+  position: absolute;
+  bottom: 14%;
+  right: 1%;
+  border: 0;
+  padding: 1rem 0.9rem;
+  background-color: #eff2f5;
+  color: #000;
+  font-size: 1rem;
 }
 
 button:disabled,
 button[disabled] {
-    opacity: 0.5;
-    cursor: not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }

@@ -26,6 +26,7 @@ const Register = () => {
         email,
         password,
       });
+      console.log("res:", res);
       if (res.status === 201) {
         return navigate("/dashboard");
       }
@@ -61,6 +62,7 @@ const Register = () => {
               <TextField
                 id="outlined-multiline-flexible"
                 label="Firstname"
+                className="firstname"
                 required
                 type="text"
                 onChange={(e) => {
@@ -107,7 +109,7 @@ const Register = () => {
               value="Submit"
               style={{
                 margin: ".5rem 1rem",
-                backgroundColor: "rgb(0 86 250)",
+                backgroundColor: "#25a876",
                 color: "#fff",
                 padding: ".8rem 0",
               }}
@@ -121,9 +123,6 @@ const Register = () => {
             </div>
           </form>
           <p style={registerStyles}>{errorMessage}</p>
-        </div>
-        <div className="right-side">
-          <h1 className="main-title">Welcome to Chat App</h1>
         </div>
       </div>
     </div>
