@@ -43,6 +43,7 @@ const Register = () => {
       navigate("/dashboard");
     }
   }, [navigate]);
+
   return (
     <div className="container">
       <div className="d-flex">

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import axios from "axios";
+// import axios from "axios";
 import { useState } from "react";
+import io from "socket.io-client";
 
 import "../pages/Dashboard.css";
+const socket = io("http://localhost:8080");
 
 export default function ChatWindow({
   receiver,
@@ -11,11 +13,13 @@ export default function ChatWindow({
   chatMessages,
 }) {
   const [msg, setMsg] = useState("");
-  console.log("data", receiver);
+
+  socket.on("connect", () => {
+    console.log("Connected to socket client");
+  });
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    console.log("RECEIVER", receiver.id);
 
     try {
       const senderId = localStorage.getItem("id");
@@ -24,17 +28,19 @@ export default function ChatWindow({
         receiverId: receiver.id,
         senderId,
       };
-
-      const response = await axios.post("http://localhost:5500/chat/add", data);
-      console.log("RESPONSE", response);
-      if (response.status === 201) {
-        setChatMessages((prev) => [...prev, data]);
-        setMsg("");
-      }
+      socket.emit("message", { data });
+      setMsg("");
     } catch (err) {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    socket.on("message", (data) => {
+      setChatMessages([...chatMessages, data]);
+    });
+  }, [setChatMessages, chatMessages]);
+
   return (
     <>
       <div

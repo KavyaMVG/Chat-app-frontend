@@ -5,6 +5,7 @@ import Chats from "../components/Chats";
 import ChatWindow from "../components/ChatWindow";
 import { useNavigate } from "react-router-dom";
 
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [receiver, setReceiver] = useState({});
@@ -15,6 +16,11 @@ const Dashboard = () => {
       navigate("/login");
     }
   }, [navigate]);
+
+
+
+
+
 
   return (
     <div className="main-page">
