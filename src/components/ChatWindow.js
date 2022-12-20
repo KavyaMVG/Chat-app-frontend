@@ -3,6 +3,8 @@ import Avatar from "@mui/material/Avatar";
 // import axios from "axios";
 import { useState } from "react";
 import io from "socket.io-client";
+import { useRef } from "react";
+import moment from "moment";
 
 import "../pages/Dashboard.css";
 const socket = io("http://localhost:8080");
@@ -13,7 +15,8 @@ export default function ChatWindow({
   chatMessages,
 }) {
   const [msg, setMsg] = useState("");
-
+  const chatWindow = useRef(null);
+  const senderId = localStorage.getItem("id");
   socket.on("connect", () => {
     console.log("Connected to socket client");
   });
@@ -22,7 +25,6 @@ export default function ChatWindow({
     e.preventDefault();
 
     try {
-      const senderId = localStorage.getItem("id");
       const data = {
         msg,
         receiverId: receiver.id,
@@ -41,6 +43,20 @@ export default function ChatWindow({
     });
   }, [setChatMessages, chatMessages]);
 
+  const scrollToBottom = () => {
+    chatWindow.current.scrollTop = chatWindow.current.scrollHeight;
+    chatWindow.current.scrollIntoView({ behavior: "smooth", block: "end" });
+  };
+
+  const formateDate = (dateTime) => {
+    const time = moment(dateTime).local().format("hh:mm A");
+    return time;
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatMessages]);
+
   return (
     <>
       <div
@@ -52,12 +68,18 @@ export default function ChatWindow({
           <Avatar alt="Remy Sharp" src="" />
           <span>{receiver.username}</span>
         </div>
-        <div className="messages">
+        <div ref={chatWindow} className="messages">
           {chatMessages &&
             chatMessages.map((data, index) => {
               return (
-                <div key={index} className="chat">
-                  {data.msg}
+                <div
+                  key={index}
+                  className={`chat ${
+                    senderId !== data.senderId ? "message-receiver" : ""
+                  }`}
+                >
+                  <p className="chat-msg"> {data.msg}</p>
+                  <p className="chat-time"> {formateDate(data.createdAt)}</p>
                 </div>
               );
             })}

@@ -34,7 +34,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-export default function Chats({ setReceiver, setChatMessages }) {
+export default function Chats({ setReceiver, setChatMessages, firstName }) {
   const [value, setValue] = React.useState("1");
   const [contactsLists, setContactLists] = useState([]);
   const [open, setOpen] = useState(false);
@@ -126,14 +126,18 @@ export default function Chats({ setReceiver, setChatMessages }) {
           overflowY: "scroll",
           height: "100vh",
           boxShadow: "0 0 6px 0 grey",
-          width: "40%",
+          width: "30vw",
         }}
         sx={{
           bgcolor: "background.paper",
           width: "40%",
         }}
       >
-        <div>
+        <div className="userInfo">
+          <div className="user">
+            <Avatar alt="Remy Sharp" src="" />
+            <span>{firstName}</span>
+          </div>
           <Button
             style={{ fontSize: ".7rem", color: "#fff", backgroundColor: "red" }}
             variant="outlined"

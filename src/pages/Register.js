@@ -26,9 +26,11 @@ const Register = () => {
         email,
         password,
       });
-      console.log("res:", res);
       if (res.status === 201) {
-        return navigate("/dashboard");
+        const { data } = res;
+        localStorage.setItem("id", data.user.id);
+        localStorage.setItem("auth", data.user.token);
+        return navigate("/dashboard", { state: { data: data.user } });
       }
     } catch (err) {
       console.log(err);

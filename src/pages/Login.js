@@ -21,9 +21,9 @@ const Login = () => {
       });
       if (res.status === 200) {
         const { data } = res;
-        localStorage.setItem("id", data.user.id);
+        localStorage.setItem("id", data.user._id);
         localStorage.setItem("auth", data.user.token);
-        return navigate("/dashboard");
+        return navigate("/dashboard", { state: { data: data.user } });
       }
     } catch (err) {
       if (err.response) setErrorMessage(err.response.data.msg);

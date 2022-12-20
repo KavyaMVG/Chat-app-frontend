@@ -12,7 +12,7 @@
 }
 .chat-window {
   position: relative;
-  width: 100%;
+  width: 70vw;
 }
 .messages {
   overflow-y: scroll;
@@ -23,10 +23,11 @@
 .chat {
   background-color: #d9fdd2;
   color: #000;
-  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
   margin: 0.5rem;
   width: fit-content;
-  border-radius: 20px;
+  border-radius: 10px 0 10px 10px;
   align-self: flex-end;
 }
 .chat-field {
@@ -60,6 +61,32 @@
   background-color: #eff2f5;
   color: #000;
   font-size: 1rem;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 1rem;
+}
+.user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.chat-msg {
+  padding: 0.1rem 1rem 0.1rem 1rem;
+}
+.chat-time {
+  margin: 1rem 0.5rem 0.3rem 0.2rem;
+  font-size: 0.7rem;
+
+  float: right;
+  padding-right: 0;
+}
+
+.message-receiver {
+  align-self: flex-start;
 }
 
 button:disabled,
