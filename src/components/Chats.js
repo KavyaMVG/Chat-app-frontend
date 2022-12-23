@@ -19,6 +19,7 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
+import GroupChat from "./GroupChat";
 
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
@@ -264,7 +265,9 @@ export default function Chats({ setReceiver, setChatMessages, firstName }) {
               );
             })}
           </TabPanel>
-          <TabPanel value="2">Groups</TabPanel>
+          <TabPanel value="2">
+            <GroupChat />
+          </TabPanel>
         </TabContext>
       </List>
     </>

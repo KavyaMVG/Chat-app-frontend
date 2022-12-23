@@ -102,6 +102,21 @@ input:focus {
   align-self: flex-start;
 }
 
+.group-btn {
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+  float: right;
+  background-color: #25a876;
+  color: #fff;
+  border: 0;
+  border-radius: 5px;
+}
+.group-input {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid gray;
+  padding: 1rem 1rem 0.5rem 1rem;
+}
 button:disabled,
 button[disabled] {
   opacity: 0.5;
