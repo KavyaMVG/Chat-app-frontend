@@ -34,6 +34,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 export default function Chats({ setReceiver, setChatMessages, firstName }) {
   const [value, setValue] = React.useState("1");
   const [contactsLists, setContactLists] = useState([]);
@@ -109,6 +110,14 @@ export default function Chats({ setReceiver, setChatMessages, firstName }) {
     setOpen(false);
   };
 
+  const stringAvatar = (name) => {
+    console.log("name", name);
+    if (!name) return;
+    return {
+      children: `${name.split("")[0][0]}`,
+    };
+  };
+
   const handleCurrentReceiver = async (contact) => {
     setReceiver(contact);
     const response = await axios.get("http://localhost:5500/chat/oneToOne", {
@@ -135,8 +144,9 @@ export default function Chats({ setReceiver, setChatMessages, firstName }) {
       >
         <div className="userInfo">
           <div className="user">
-            <Avatar alt="Remy Sharp" src="" />
+            <Avatar alt="Remy Sharp" src="" {...stringAvatar(firstName)} />
             <span>{firstName}</span>
+            {console.log("nm1", firstName)}
           </div>
           <Button
             style={{ fontSize: ".7rem", color: "#fff", backgroundColor: "red" }}
@@ -194,7 +204,7 @@ export default function Chats({ setReceiver, setChatMessages, firstName }) {
                     value="Submit"
                     style={{
                       margin: ".5rem 1rem",
-                      backgroundColor: "rgb(0 86 250)",
+                      backgroundColor: "#25a876",
                       color: "#fff",
                       padding: ".8rem 0",
                     }}
@@ -221,7 +231,7 @@ export default function Chats({ setReceiver, setChatMessages, firstName }) {
             />
             {contactsLists.map(({ contact }, index) => {
               return (
-                <div key={index}>
+                <div key={index} className="one-chat">
                   <ListItem
                     onClick={() => handleCurrentReceiver(contact)}
                     alignItems="flex-start"
@@ -229,7 +239,8 @@ export default function Chats({ setReceiver, setChatMessages, firstName }) {
                     <ListItemAvatar>
                       <Avatar
                         alt="Remy Sharp"
-                        src="/static/images/avatar/1.jpg"
+                        src=""
+                        {...stringAvatar(contact.username)}
                       />
                     </ListItemAvatar>
                     <ListItemText

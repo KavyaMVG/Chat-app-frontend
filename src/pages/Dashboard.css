@@ -3,7 +3,7 @@
 }
 .header {
   height: 5vh;
-  padding: 1rem;
+  padding: 2rem;
   background-color: #eff2f5;
   display: flex;
   align-items: center;
@@ -20,6 +20,9 @@
   display: flex;
   flex-direction: column;
 }
+input:focus {
+  border-color: #000;
+}
 .chat {
   background-color: #d9fdd2;
   color: #000;
@@ -32,7 +35,7 @@
 }
 .chat-field {
   position: absolute;
-  bottom: 3%;
+  bottom: 0;
   width: 100%;
 }
 .send-btn {
@@ -68,6 +71,7 @@
   align-items: center;
   justify-content: space-between;
   margin: 0 1rem;
+  padding: 0.5rem 0;
 }
 .user {
   display: flex;
@@ -83,6 +87,15 @@
 
   float: right;
   padding-right: 0;
+}
+
+.css-hhvo2v-MuiListItem-root:hover {
+  background-color: #eff2f5;
+}
+
+.one-chat:hover {
+  border-style: none;
+  border-bottom-width: 0;
 }
 
 .message-receiver {

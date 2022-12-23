@@ -53,6 +53,14 @@ export default function ChatWindow({
     return time;
   };
 
+  const stringAvatar = (name) => {
+    if (!name) return;
+
+    return {
+      children: `${name.split("")[0][0]}`,
+    };
+  };
+
   useEffect(() => {
     scrollToBottom();
   }, [chatMessages]);
@@ -64,8 +72,9 @@ export default function ChatWindow({
           Object.keys(receiver).length === 0 ? "hide" : "block"
         }`}
       >
+        {console.log("user", receiver)}
         <div className="header">
-          <Avatar alt="Remy Sharp" src="" />
+          <Avatar alt="" src="" {...stringAvatar(receiver.username)} />
           <span>{receiver.username}</span>
         </div>
         <div ref={chatWindow} className="messages">
