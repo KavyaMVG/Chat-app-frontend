@@ -265,8 +265,8 @@ export default function Chats({ setReceiver, setChatMessages, firstName }) {
               );
             })}
           </TabPanel>
-          <TabPanel value="2">
-            <GroupChat />
+          <TabPanel style={{ padding: 0 }} value="2">
+            <GroupChat firstName={firstName} />
           </TabPanel>
         </TabContext>
       </List>

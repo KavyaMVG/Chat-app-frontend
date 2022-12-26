@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import GroupsIcon from "@mui/icons-material/Groups";
 import { useState } from "react";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -28,13 +28,15 @@ const style = {
   p: 2,
 };
 
-const GroupChat = () => {
+const GroupChat = ({ firstName }) => {
   const [open, setOpen] = useState(false);
   const [contactList, setContactList] = useState("");
   const [members, setMembers] = useState([]);
   const [groupName, setGroupName] = useState("");
   const [groupList, setGroupList] = useState([]);
-  //   const userId = localStorage.getItem("id");
+
+  const [displayGrouplist, setDisplayGrouplist] = useState([]);
+  const userId = localStorage.getItem("id");
 
   const getContactList = async () => {
     try {
@@ -73,14 +75,22 @@ const GroupChat = () => {
     }
   };
 
-  const createGroup = async (members) => {
-    console.log("M", members);
+  const createGroup = async () => {
     try {
+      const memberCopy = [...members];
+      const user = {
+        name: firstName,
+        memberId: userId,
+      };
+      memberCopy.push(user);
+      setMembers(memberCopy);
+
       const response = await axios.post(
         `http://localhost:5500/groupchat/addgroup`,
         {
           name: groupName,
           members: members,
+          admin: userId,
         }
       );
       const newGroup = response.data;
@@ -98,11 +108,25 @@ const GroupChat = () => {
       children: `${name.split("")[0][0]}`,
     };
   };
+  useEffect(() => {
+    try {
+      axios
+        .get(`http://localhost:5500/groupchat/getgroup?admin=${userId}`)
+        .then((response) => {
+          const { data } = response;
+
+          setDisplayGrouplist(data.userGroupChat);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, [userId]);
 
   const handleOpen = () => {
     setOpen(true);
     getContactList();
   };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -116,6 +140,20 @@ const GroupChat = () => {
         onClick={handleOpen}
         icon={<GroupsIcon />}
       />
+      {console.log("Dis", displayGrouplist)}
+      {displayGrouplist.map((group, index) => {
+        return (
+          <div key={index}>
+            <ListItem alignItems="center">
+              <ListItemAvatar>
+                <Avatar alt="Remy Sharp" src="" {...stringAvatar(group.name)} />
+              </ListItemAvatar>
+              <ListItemText primary={group.name} />
+            </ListItem>
+            <Divider variant="inset" component="li" />
+          </div>
+        );
+      })}
 
       <Modal
         aria-labelledby="transition-modal-title"
@@ -181,7 +219,7 @@ const GroupChat = () => {
                   </div>
                 );
               })}
-            <button className="group-btn" onClick={() => createGroup(members)}>
+            <button className="group-btn" onClick={() => createGroup()}>
               New group
             </button>
           </Box>
