@@ -13,7 +13,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import axios from "axios";
 import Checkbox from "@mui/material/Checkbox";
-
+import GroupChatWindow from "./GroupChatWindow";
 import Typography from "@mui/material/Typography";
 
 const style = {
@@ -86,7 +86,7 @@ const GroupChat = ({ firstName }) => {
       setMembers(memberCopy);
 
       const response = await axios.post(
-        `http://localhost:5500/groupchat/addgroup`,
+        `http://localhost:5500/group/addgroup`,
         {
           name: groupName,
           members: members,
@@ -105,13 +105,13 @@ const GroupChat = ({ firstName }) => {
     // console.log("name", name);
     if (!name) return;
     return {
-      children: `${name.split("")[0][0]}`,
+      children: `${name.split("")[0][0].toUpperCase()}`,
     };
   };
   useEffect(() => {
     try {
       axios
-        .get(`http://localhost:5500/groupchat/getgroup?admin=${userId}`)
+        .get(`http://localhost:5500/group/getgroup?admin=${userId}`)
         .then((response) => {
           const { data } = response;
 
@@ -227,14 +227,22 @@ const GroupChat = ({ firstName }) => {
       </Modal>
       {groupList.map((group) => {
         return (
-          <div key={group._id} className="one-chat">
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar alt="Remy Sharp" src="" {...stringAvatar(group.name)} />
-              </ListItemAvatar>
-              <ListItemText primary={group.name} />
-            </ListItem>
-            <Divider variant="inset" component="li" />
+          <div>
+            <div key={group._id} className="one-chat">
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar
+                    alt="Remy Sharp"
+                    src=""
+                    {...stringAvatar(group.name)}
+                  />
+                </ListItemAvatar>
+                <ListItemText primary={group.name} />
+              </ListItem>
+              <Divider variant="inset" component="li" />
+            </div>
+
+            <GroupChatWindow />
           </div>
         );
       })}

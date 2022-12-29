@@ -56,7 +56,7 @@ export default function ChatWindow({
   const stringAvatar = (name) => {
     if (!name) return;
     return {
-      children: `${name.split("")[0][0]}`,
+      children: `${name.split("")[0][0].toUpperCase()}`,
     };
   };
 

@@ -30,8 +30,8 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  bgcolor: "#d9d0c9",
+  border: "2px solid #d9d0c9",
   boxShadow: 24,
   p: 4,
 };
@@ -115,7 +115,7 @@ export default function Chats({ setReceiver, setChatMessages, firstName }) {
     console.log("name", name);
     if (!name) return;
     return {
-      children: `${name.split("")[0][0]}`,
+      children: `${name.split("")[0][0].toUpperCase()}`,
     };
   };
 

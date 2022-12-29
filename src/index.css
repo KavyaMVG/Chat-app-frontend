@@ -28,7 +28,7 @@ img {
   max-width: 100%;
 }
 .login {
-  width: 30vw;
+  min-width: 30vw;
 }
 
 .App {
