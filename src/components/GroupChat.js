@@ -27,14 +27,13 @@ const style = {
   p: 2,
 };
 
-const GroupChat = ({ firstName }) => {
+const GroupChat = ({ firstName, setGroupId }) => {
   const [open, setOpen] = useState(false);
   const [contactList, setContactList] = useState("");
   const [members, setMembers] = useState([]);
   const [groupName, setGroupName] = useState("");
   const [groupList, setGroupList] = useState([]);
 
-  const [displayGrouplist, setDisplayGrouplist] = useState([]);
   const userId = localStorage.getItem("id");
 
   const getContactList = async () => {
@@ -92,6 +91,7 @@ const GroupChat = ({ firstName }) => {
           admin: userId,
         }
       );
+      console.log("RESPO", response);
       const newGroup = response.data;
       setGroupList((prev) => [...prev, newGroup]);
       setOpen(false);
@@ -114,7 +114,7 @@ const GroupChat = ({ firstName }) => {
         .then((response) => {
           const { data } = response;
 
-          setDisplayGrouplist(data.userGroupChat);
+          setGroupList(data.userGroupChat);
         });
     } catch (err) {
       console.log(err);
@@ -139,19 +139,6 @@ const GroupChat = ({ firstName }) => {
         onClick={handleOpen}
         icon={<GroupsIcon />}
       />
-      {displayGrouplist.map((group, index) => {
-        return (
-          <div key={index}>
-            <ListItem alignItems="center">
-              <ListItemAvatar>
-                <Avatar alt="Remy Sharp" src="" {...stringAvatar(group.name)} />
-              </ListItemAvatar>
-              <ListItemText primary={group.name} />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-          </div>
-        );
-      })}
 
       <Modal
         aria-labelledby="transition-modal-title"
@@ -223,11 +210,11 @@ const GroupChat = ({ firstName }) => {
           </Box>
         </Fade>
       </Modal>
-      {groupList.map((group) => {
+      {groupList.map((group, index) => {
         return (
           <div>
-            <div key={group._id} className="one-chat">
-              <ListItem alignItems="flex-start">
+            <div key={index} className="one-chat">
+              <ListItem alignItems="flex-start" onClick={setGroupId(group._id)}>
                 <ListItemAvatar>
                   <Avatar
                     alt="Remy Sharp"

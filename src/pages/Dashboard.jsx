@@ -43,6 +43,8 @@ const Dashboard = () => {
   const [value, setValue] = useState("1");
   const [receiver, setReceiver] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
+    const [groupId, setGroupId] = useState("");
+
   const firstName = location.state.data.firstname;
 
   const handleOpen = () => setOpen(true);
@@ -143,10 +145,11 @@ const Dashboard = () => {
             />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="2">
-            <GroupChat firstName={firstName} />
+            <GroupChat firstName={firstName} setGroupId={setGroupId} />
           </TabPanel>
         </TabContext>
       </List>
+        {console.log(groupId)}
       {value === "1" ? (
         <ChatWindow
           chatMessages={chatMessages}
@@ -154,7 +157,7 @@ const Dashboard = () => {
           receiver={receiver}
         />
       ) : (
-        <GroupChatWindow />
+        <GroupChatWindow groupId={groupId}/>
       )}
     </div>
   );
