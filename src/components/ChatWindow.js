@@ -6,13 +6,13 @@ import io from "socket.io-client";
 import { useRef } from "react";
 import moment from "moment";
 
-import "../pages/Dashboard.css";
+import "../styles/Dashboard.css";
 const socket = io("http://localhost:8080");
 
 export default function ChatWindow({
   receiver,
-  setChatMessages,
   chatMessages,
+  setChatMessages,
 }) {
   const [msg, setMsg] = useState("");
   const chatWindow = useRef(null);

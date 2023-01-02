@@ -13,7 +13,6 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import axios from "axios";
 import Checkbox from "@mui/material/Checkbox";
-import GroupChatWindow from "./GroupChatWindow";
 import Typography from "@mui/material/Typography";
 
 const style = {
@@ -140,7 +139,6 @@ const GroupChat = ({ firstName }) => {
         onClick={handleOpen}
         icon={<GroupsIcon />}
       />
-      {console.log("Dis", displayGrouplist)}
       {displayGrouplist.map((group, index) => {
         return (
           <div key={index}>
@@ -241,8 +239,6 @@ const GroupChat = ({ firstName }) => {
               </ListItem>
               <Divider variant="inset" component="li" />
             </div>
-
-            <GroupChatWindow />
           </div>
         );
       })}
