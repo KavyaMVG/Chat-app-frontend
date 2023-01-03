@@ -23,6 +23,11 @@
 input:focus {
   border-color: #000;
 }
+
+.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+  width: 20vw;
+}
+
 .chat {
   background-color: #d9fdd2;
   color: #000;

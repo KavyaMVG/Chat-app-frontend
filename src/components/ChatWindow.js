@@ -71,7 +71,6 @@ export default function ChatWindow({
           Object.keys(receiver).length === 0 ? "hide" : "block"
         }`}
       >
-        {console.log("user", receiver)}
         <div className="header">
           <Avatar alt="" src="" {...stringAvatar(receiver.username)} />
           <span>{receiver.username}</span>

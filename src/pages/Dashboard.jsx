@@ -30,8 +30,8 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "#d9d0c9",
-  border: "2px solid #d9d0c9",
+  bgcolor: "#fff",
+  border: "2px solid #FFF",
   boxShadow: 24,
   p: 4,
 };
@@ -43,7 +43,9 @@ const Dashboard = () => {
   const [value, setValue] = useState("1");
   const [receiver, setReceiver] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
-    const [groupId, setGroupId] = useState("");
+  const [currentGroup, setCurrentGroup] = useState({})
+  const [chatMsg, setChatMsg] = useState([])
+
 
   const firstName = location.state.data.firstname;
 
@@ -129,14 +131,23 @@ const Dashboard = () => {
             <Tab label="Contacts" value="1" />
             <Tab label="Groups" value="2" />
           </TabList>
-          <TabPanel style={{ padding: 0 }} value="1">
+          <TabPanel style={{ padding: 0, position:"relative"}} value="1">
+            <div >
+             <p style={{position:"absolute", right:"16%", top:"7%"}}>Add contact</p>
+
             <BottomNavigationAction
               style={{ float: "right" }}
               label="person"
               value="person"
               onClick={handleOpen}
-              icon={<PersonAddIcon />}
+              icon={<PersonAddIcon style={{fontSize:"2.2rem",
+               border:"1px solid #bdbdbd", 
+               backgroundColor:"#bdbdbd",
+               color:"#fff", 
+               borderRadius:"50%", 
+               padding:"4px"}}/>}
             />
+            </div>
             <Chats
               contactsLists={contactsLists}
               setContactLists={setContactLists}
@@ -145,11 +156,10 @@ const Dashboard = () => {
             />
           </TabPanel>
           <TabPanel style={{ padding: 0 }} value="2">
-            <GroupChat firstName={firstName} setGroupId={setGroupId} />
+            <GroupChat firstName={firstName} setCurrentGroup={setCurrentGroup} setChatMsg={setChatMsg} />
           </TabPanel>
         </TabContext>
       </List>
-        {console.log(groupId)}
       {value === "1" ? (
         <ChatWindow
           chatMessages={chatMessages}
@@ -157,7 +167,7 @@ const Dashboard = () => {
           receiver={receiver}
         />
       ) : (
-        <GroupChatWindow groupId={groupId}/>
+        <GroupChatWindow currentGroup={currentGroup} chatMsg={chatMsg} setChatMsg={setChatMsg}/>
       )}
     </div>
   );

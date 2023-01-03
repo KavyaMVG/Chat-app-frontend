@@ -78,7 +78,7 @@ export default function AddContact({ setContactLists, setOpen }) {
           padding: ".8rem 0",
         }}
       >
-        Submit
+        Save
       </Button>
     </form>
   );

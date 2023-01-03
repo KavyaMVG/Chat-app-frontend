@@ -27,7 +27,7 @@ const style = {
   p: 2,
 };
 
-const GroupChat = ({ firstName, setGroupId }) => {
+const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
   const [open, setOpen] = useState(false);
   const [contactList, setContactList] = useState("");
   const [members, setMembers] = useState([]);
@@ -87,7 +87,7 @@ const GroupChat = ({ firstName, setGroupId }) => {
         `http://localhost:5500/group/addgroup`,
         {
           name: groupName,
-          members: members,
+          members: memberCopy,
           admin: userId,
         }
       );
@@ -95,6 +95,20 @@ const GroupChat = ({ firstName, setGroupId }) => {
       const newGroup = response.data;
       setGroupList((prev) => [...prev, newGroup]);
       setOpen(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleCurrentGroup = async (group) => {
+    setCurrentGroup(group);
+    try {
+      const response = await axios.get(
+        `http://localhost:5500/groupChat/groupMsg?groupId=${group._id}`
+      );
+      const groupMsg = response.data.groupMsg;
+      setChatMsg(groupMsg);
+      console.log("M", groupMsg);
     } catch (err) {
       console.log(err);
     }
@@ -210,11 +224,15 @@ const GroupChat = ({ firstName, setGroupId }) => {
           </Box>
         </Fade>
       </Modal>
+      {console.log("grpList", groupList)}
       {groupList.map((group, index) => {
         return (
           <div>
             <div key={index} className="one-chat">
-              <ListItem alignItems="flex-start" onClick={setGroupId(group._id)}>
+              <ListItem
+                alignItems="flex-start"
+                onClick={() => handleCurrentGroup(group)}
+              >
                 <ListItemAvatar>
                   <Avatar
                     alt="Remy Sharp"
