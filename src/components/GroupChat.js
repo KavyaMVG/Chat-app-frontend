@@ -151,7 +151,18 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
         label="person"
         value="person"
         onClick={handleOpen}
-        icon={<GroupsIcon />}
+        icon={
+          <GroupsIcon
+            style={{
+              fontSize: "2.2rem",
+              border: "1px solid #bdbdbd",
+              backgroundColor: "#bdbdbd",
+              color: "#fff",
+              borderRadius: "50%",
+              padding: "4px",
+            }}
+          />
+        }
       />
 
       <Modal

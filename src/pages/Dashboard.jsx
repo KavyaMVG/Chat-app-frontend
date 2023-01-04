@@ -131,9 +131,7 @@ const Dashboard = () => {
             <Tab label="Contacts" value="1" />
             <Tab label="Groups" value="2" />
           </TabList>
-          <TabPanel style={{ padding: 0, position:"relative"}} value="1">
-            <div >
-             <p style={{position:"absolute", right:"16%", top:"7%"}}>Add contact</p>
+          <TabPanel style={{ padding: 0}} value="1">
 
             <BottomNavigationAction
               style={{ float: "right" }}
@@ -147,7 +145,6 @@ const Dashboard = () => {
                borderRadius:"50%", 
                padding:"4px"}}/>}
             />
-            </div>
             <Chats
               contactsLists={contactsLists}
               setContactLists={setContactLists}

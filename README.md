@@ -16,7 +16,7 @@ A chat application built using pure HTML ,CSS, Material ui, React js as part of 
 ![Project live image](./assets/chats.png)
 
 ![Project live image](./assets/addContact.png)
-![Project live image](./assets/groups.png)
+![Project live image](./assets/grpchat.png)
 ![Project live image](./assets/add-group.png)
 ![Project live image](./assets/members.png)
 
@@ -38,4 +38,4 @@ To fix a bug or enhance an existing module, follow these steps:
 
 ### Bug / Feature Request
 
-If you find a bug or to request a new feature, kindly open an issue [here](https://github.com/KavyaMVG/RODE-Clone/issues/new).
+If you find a bug or to request a new feature, kindly open an issue [here](https://github.com/KavyaMVG/Chat-app-frontend/issues/new).
