@@ -14,6 +14,7 @@ import Avatar from "@mui/material/Avatar";
 import axios from "axios";
 import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
+import { config } from "../config";
 
 const style = {
   position: "absolute",
@@ -39,7 +40,7 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
   const getContactList = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5500/contact/user?userId=${localStorage.getItem(
+        `${config.API.baseURL}/contact/user?userId=${localStorage.getItem(
           "id"
         )}`,
         {
@@ -84,7 +85,7 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
       setMembers(memberCopy);
 
       const response = await axios.post(
-        `http://localhost:5500/group/addgroup`,
+        `${config.API.baseURL}/group/addgroup`,
         {
           name: groupName,
           members: memberCopy,
@@ -104,7 +105,7 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
     setCurrentGroup(group);
     try {
       const response = await axios.get(
-        `http://localhost:5500/groupChat/groupMsg?groupId=${group._id}`
+        `${config.API.baseURL}/groupChat/groupMsg?groupId=${group._id}`
       );
       const groupMsg = response.data.groupMsg;
       setChatMsg(groupMsg);
@@ -124,7 +125,7 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
   useEffect(() => {
     try {
       axios
-        .get(`http://localhost:5500/group/getgroup?admin=${userId}`)
+        .get(`${config.API.baseURL}/group/getgroup?admin=${userId}`)
         .then((response) => {
           const { data } = response;
 

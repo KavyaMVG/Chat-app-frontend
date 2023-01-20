@@ -6,6 +6,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
+import { config } from "../config";
 
 export default function Chats({
   setChatMessages,
@@ -18,7 +19,7 @@ export default function Chats({
     const getContacts = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5500/contact/user?userId=${localStorage.getItem(
+          `${config.API.baseURL}/contact/user?userId=${localStorage.getItem(
             "id"
           )}`,
           {
@@ -45,7 +46,7 @@ export default function Chats({
 
   const handleCurrentReceiver = async (contact) => {
     setReceiver(contact);
-    const response = await axios.get("http://localhost:5500/chat/oneToOne", {
+    const response = await axios.get(`${config.API.baseURL}/chat/oneToOne`, {
       params: {
         senderId: userId,
         receiverId: contact.id,

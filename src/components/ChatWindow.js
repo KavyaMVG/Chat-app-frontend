@@ -5,9 +5,13 @@ import { useState } from "react";
 import io from "socket.io-client";
 import { useRef } from "react";
 import moment from "moment";
+import { config } from "../config";
 
 import "../styles/Dashboard.css";
-const socket = io("http://localhost:8080");
+
+const socket = io(`${config.API.baseURL}:8080`, {
+  path: "/",
+});
 
 export default function ChatWindow({
   receiver,

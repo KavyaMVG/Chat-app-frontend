@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
+import { config } from "../config";
 
 import { useState, useEffect } from "react";
 
@@ -26,7 +27,7 @@ export default function GroupChatWindow({ currentGroup, chatMsg, setChatMsg }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:5500/groupChat/addGroupChat",
+        `${config.API.baseURL}/groupChat/addGroupChat`,
         {
           groupId: currentGroup._id,
           msg: groupMsg,

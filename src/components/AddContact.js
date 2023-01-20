@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
+import { config } from "../config";
 
 export default function AddContact({ setContactLists, setOpen }) {
   const [userName, setUserName] = useState("");
@@ -20,7 +21,7 @@ export default function AddContact({ setContactLists, setOpen }) {
     };
     try {
       const response = await axios.post(
-        "http://localhost:5500/contact/add",
+        `${config.API.baseURL}/contact/add`,
         data
       );
       if (response.status === 201) {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
+import { config } from "../config";
 
 const Register = () => {
   const [firstname, setFirstname] = useState("");
@@ -20,7 +21,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5500/user/register", {
+      const res = await axios.post(`${config.API.baseURL}/user/register`, {
         firstname,
         lastname,
         email,

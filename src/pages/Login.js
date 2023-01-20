@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, TextField } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
+import { config } from "../config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
   const navigate = useNavigate();
 
   const loginDetails = async (e) => {
@@ -15,7 +17,7 @@ const Login = () => {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:5500/user/login", {
+      const res = await axios.post(`${config.API.baseURL}/user/login`, {
         email,
         password,
       });
