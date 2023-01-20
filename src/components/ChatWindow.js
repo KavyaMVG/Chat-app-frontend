@@ -9,9 +9,7 @@ import { config } from "../config";
 
 import "../styles/Dashboard.css";
 
-const socket = io(`${config.API.baseURL}:8080`, {
-  path: "/",
-});
+const socket = io(`wss://chat-app-backend-production-2d04.up.railway.app:8080`);
 
 export default function ChatWindow({
   receiver,
