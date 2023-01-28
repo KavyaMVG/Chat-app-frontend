@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Button, TextField } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import { config } from "../config";
+import authContext from "../store/auth-context";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const { user, setUser } = useContext(authContext);
   const navigate = useNavigate();
 
   const loginDetails = async (e) => {
@@ -23,8 +25,8 @@ const Login = () => {
       });
       if (res.status === 200) {
         const { data } = res;
-        localStorage.setItem("id", data.user._id);
-        localStorage.setItem("auth", data.user.token);
+        console.log("success");
+        setUser(data.user);
         return navigate("/dashboard", { state: { data: data.user } });
       }
     } catch (err) {
@@ -33,10 +35,11 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("auth") && localStorage.getItem("id")) {
+    console.log(user);
+    if (user && user._id && user.token) {
       navigate("/dashboard");
     }
-  }, [navigate]);
+  }, [navigate, user]);
   return (
     <div className="container">
       <div className="d-flex">

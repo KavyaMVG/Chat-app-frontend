@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 import { config } from "../config";
+import AuthContext from "../store/auth-context";
 
 const Register = () => {
   const [firstname, setFirstname] = useState("");
@@ -11,6 +12,7 @@ const Register = () => {
   const [password, setPassword] = useState();
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContext);
 
   const registerStyles = {
     display: errorMessage ? "block" : "none",
@@ -29,8 +31,7 @@ const Register = () => {
       });
       if (res.status === 201) {
         const { data } = res;
-        localStorage.setItem("id", data.user.id);
-        localStorage.setItem("auth", data.user.token);
+        setUser(data.user);
         return navigate("/dashboard", { state: { data: data.user } });
       }
     } catch (err) {
@@ -42,10 +43,10 @@ const Register = () => {
   //   const userDetails = ()
 
   useEffect(() => {
-    if (localStorage.getItem("auth") && localStorage.getItem("id")) {
+    if (user && user.token && user.id) {
       navigate("/dashboard");
     }
-  }, [navigate]);
+  }, [navigate, user]);
 
   return (
     <div className="container">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
 import "../styles/Dashboard.css";
 import Chats from "../components/Chats";
@@ -23,6 +23,7 @@ import Box from "@mui/material/Box";
 import AddContact from "../components/AddContact";
 import ChatWindow from "../components/ChatWindow";
 import GroupChatWindow from "../components/GroupChatWindow";
+import AuthContext from "../store/auth-context";
 
 const style = {
   position: "absolute",
@@ -45,6 +46,7 @@ const Dashboard = () => {
   const [chatMessages, setChatMessages] = useState([]);
   const [currentGroup, setCurrentGroup] = useState({})
   const [chatMsg, setChatMsg] = useState([])
+  const {user, setUser } = useContext(AuthContext)
 
 
   const firstName = location.state.data.firstname;
@@ -56,7 +58,7 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    localStorage.clear();
+    setUser(null)
     navigate("/login");
   };
 
@@ -65,10 +67,10 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (!(localStorage.getItem("auth") && localStorage.getItem("id"))) {
+    if (!(user.token) && (user._id)) {
       navigate("/login");
     }
-  }, [navigate]);
+  }, [navigate, user]);
 
   const stringAvatar = (name) => {
     console.log("name", name);
