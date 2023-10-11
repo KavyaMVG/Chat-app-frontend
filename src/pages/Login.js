@@ -25,9 +25,9 @@ const Login = () => {
       });
       if (res.status === 200) {
         const { data } = res;
-        console.log("success");
+        localStorage.setItem("user", JSON.stringify(data.user));
         setUser(data.user);
-        return navigate("/dashboard", { state: { data: data.user } });
+        navigate("/dashboard");
       }
     } catch (err) {
       if (err.response) setErrorMessage(err.response.data.msg);
@@ -35,7 +35,6 @@ const Login = () => {
   };
 
   useEffect(() => {
-    console.log(user);
     if (user && user._id && user.token) {
       navigate("/dashboard");
     }

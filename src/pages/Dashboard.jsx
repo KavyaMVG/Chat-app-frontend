@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 
 import "../styles/Dashboard.css";
 import Chats from "../components/Chats";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import List from "@mui/material/List";
 
 import Avatar from "@mui/material/Avatar";
@@ -38,7 +38,6 @@ const style = {
 };
 const Dashboard = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [contactsLists, setContactLists] = useState([]);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("1");
@@ -48,8 +47,7 @@ const Dashboard = () => {
   const [chatMsg, setChatMsg] = useState([])
   const {user, setUser } = useContext(AuthContext)
 
-
-  const firstName = location.state.data.firstname;
+  const firstName = user.firstname || '';
 
   const handleOpen = () => setOpen(true);
 
@@ -59,7 +57,8 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     setUser(null)
-    navigate("/login");
+    localStorage.removeItem('user')
+    navigate("/");
   };
 
   const handleChange = (_, newValue) => {
@@ -67,13 +66,12 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (!(user.token) && (user._id)) {
-      navigate("/login");
+    if (!(user && user.token) && (user && user._id)) {
+      navigate("/");
     }
   }, [navigate, user]);
 
   const stringAvatar = (name) => {
-    console.log("name", name);
     if (!name) return;
     return {
       children: `${name.split("")[0][0].toUpperCase()}`,
@@ -121,6 +119,7 @@ const Dashboard = () => {
             <Fade in={open}>
               <Box sx={style}>
                 <AddContact
+                 contactsLists={contactsLists}
                   setContactLists={setContactLists}
                   setOpen={setOpen}
                 />

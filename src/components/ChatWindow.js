@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 // import axios from "axios";
 import { useState } from "react";
 import io from "socket.io-client";
 import { useRef } from "react";
 import moment from "moment";
-import { config } from "../config";
+// import { config } from "../config";
 
 import "../styles/Dashboard.css";
+import AuthContext from "../store/auth-context";
 
-const socket = io(`wss://chat-app-backend-production-2d04.up.railway.app:8080`);
+const socket = io(``);
 
 export default function ChatWindow({
   receiver,
@@ -18,7 +19,8 @@ export default function ChatWindow({
 }) {
   const [msg, setMsg] = useState("");
   const chatWindow = useRef(null);
-  const senderId = localStorage.getItem("id");
+  const { user } = useContext(AuthContext);
+  const senderId = user ? user._id : "!!";
   socket.on("connect", () => {
     console.log("Connected to socket client");
   });
@@ -32,8 +34,8 @@ export default function ChatWindow({
         receiverId: receiver.id,
         senderId,
       };
-      socket.emit("message", { data });
-      setMsg("");
+      // socket.emit("message", { data });
+      // setMsg("");
     } catch (err) {
       console.log(err);
     }

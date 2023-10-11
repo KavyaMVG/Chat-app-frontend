@@ -5,11 +5,11 @@ import Dashboard from "../pages/Dashboard";
 const routes = [
   {
     path: "/",
-    element: <Register />,
+    element: <Login />,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "/register",
+    element: <Register />,
   },
   {
     path: "/dashboard",

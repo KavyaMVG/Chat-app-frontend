@@ -122,7 +122,7 @@ const Register = () => {
               Submit
             </Button>
             <div className="text">
-              <Link to="/login" className="link">
+              <Link to="/" className="link">
                 Already have an account?<Button>Login</Button>
               </Link>
             </div>

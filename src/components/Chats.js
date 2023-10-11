@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useCallback } from "react";
 import axios from "axios";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
@@ -7,6 +7,9 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { config } from "../config";
+import AuthContext from "../store/auth-context";
+import { Button } from "@mui/material";
+import { Delete } from "@mui/icons-material";
 
 export default function Chats({
   setChatMessages,
@@ -14,30 +17,29 @@ export default function Chats({
   setReceiver,
   setContactLists,
 }) {
-  const userId = localStorage.getItem("id");
+  const { user } = useContext(AuthContext);
+
+  const getContacts = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `${config.API.baseURL}/contact/user?userId=${user._id || ""}`,
+        {
+          headers: {
+            Authorization: user.token,
+          },
+        }
+      );
+      setContactLists(response.data.userContact);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [user, setContactLists]);
+
   useEffect(() => {
-    const getContacts = async () => {
-      try {
-        const response = await axios.get(
-          `${config.API.baseURL}/contact/user?userId=${localStorage.getItem(
-            "id"
-          )}`,
-          {
-            headers: {
-              Authorization: localStorage.getItem("auth"),
-            },
-          }
-        );
-        setContactLists(response.data.userContact);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     getContacts();
-  }, [setContactLists]);
+  }, [setContactLists, user, getContacts]);
 
   const stringAvatar = (name) => {
-    console.log("name", name);
     if (!name) return;
     return {
       children: `${name.split("")[0][0].toUpperCase()}`,
@@ -48,14 +50,26 @@ export default function Chats({
     setReceiver(contact);
     const response = await axios.get(`${config.API.baseURL}/chat/oneToOne`, {
       params: {
-        senderId: userId,
+        senderId: user._id,
         receiverId: contact.id,
       },
     });
     setChatMessages(response.data.chats);
   };
+
+  const handleDelete = async () => {
+    const confirm = window.confirm("This will remove all the contacts");
+    if (confirm) {
+      await axios.delete(`${config.API.baseURL}/contact/delete`);
+      getContacts();
+    }
+  };
+
   return (
     <>
+      <Button onClick={handleDelete} style={{ margin: ".5rem" }}>
+        <Delete />
+      </Button>
       {contactsLists.map(({ contact }, index) => {
         return (
           <div key={index} className="one-chat">

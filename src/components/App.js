@@ -6,7 +6,8 @@ import AuthContext from "../store/auth-context";
 
 function App() {
   const router = createBrowserRouter(routes);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+
   return (
     <div className="App">
       <AuthContext.Provider value={{ user: user, setUser: setUser }}>

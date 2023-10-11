@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import GroupsIcon from "@mui/icons-material/Groups";
 import { useState } from "react";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -15,6 +15,7 @@ import axios from "axios";
 import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
 import { config } from "../config";
+import AuthContext from "../store/auth-context";
 
 const style = {
   position: "absolute",
@@ -34,15 +35,14 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
   const [members, setMembers] = useState([]);
   const [groupName, setGroupName] = useState("");
   const [groupList, setGroupList] = useState([]);
+  const { user } = useContext(AuthContext);
 
-  const userId = localStorage.getItem("id");
+  // const userId = localStorage.getItem("id");
 
   const getContactList = async () => {
     try {
       const response = await axios.get(
-        `${config.API.baseURL}/contact/user?userId=${localStorage.getItem(
-          "id"
-        )}`,
+        `${config.API.baseURL}/contact/user?userId=${user.id}`,
         {
           headers: {
             Authorization: localStorage.getItem("auth"),
@@ -69,7 +69,6 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
       const filteredMember = memberCopy.filter(
         (mem) => memberId !== mem.memberId
       );
-      console.log("FIL", filteredMember);
       setMembers(filteredMember);
     }
   };
@@ -77,11 +76,12 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
   const createGroup = async () => {
     try {
       const memberCopy = [...members];
-      const user = {
+      const users = {
         name: firstName,
-        memberId: userId,
+        memberId: user.id,
       };
-      memberCopy.push(user);
+      memberCopy.push(users);
+      console.log("memberCopy", users);
       setMembers(memberCopy);
 
       const response = await axios.post(
@@ -89,10 +89,9 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
         {
           name: groupName,
           members: memberCopy,
-          admin: userId,
+          admin: user.id,
         }
       );
-      console.log("RESPO", response);
       const newGroup = response.data;
       setGroupList((prev) => [...prev, newGroup]);
       setOpen(false);
@@ -109,14 +108,12 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
       );
       const groupMsg = response.data.groupMsg;
       setChatMsg(groupMsg);
-      console.log("M", groupMsg);
     } catch (err) {
       console.log(err);
     }
   };
 
   const stringAvatar = (name) => {
-    // console.log("name", name);
     if (!name) return;
     return {
       children: `${name.split("")[0][0].toUpperCase()}`,
@@ -125,7 +122,7 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
   useEffect(() => {
     try {
       axios
-        .get(`${config.API.baseURL}/group/getgroup?admin=${userId}`)
+        .get(`${config.API.baseURL}/group/getgroup?admin=${user.id}`)
         .then((response) => {
           const { data } = response;
 
@@ -134,7 +131,7 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
     } catch (err) {
       console.log(err);
     }
-  }, [userId]);
+  }, [user.id]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -186,6 +183,7 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
               placeholder="Group Subject"
               onChange={(e) => setGroupName(e.target.value)}
             />
+            {console.log("contactList", contactList)}
             {contactList &&
               contactList.map(({ contact }, index) => {
                 return (
@@ -236,7 +234,6 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
           </Box>
         </Fade>
       </Modal>
-      {console.log("grpList", groupList)}
       {groupList.map((group, index) => {
         return (
           <div>

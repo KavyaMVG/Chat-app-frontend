@@ -15,7 +15,6 @@ export default function GroupChatWindow({ currentGroup, chatMsg, setChatMsg }) {
   const GroupChatWindow = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  console.log("OPEN", open);
 
   const [groupMsg, setGroupMsg] = useState([]);
   const senderId = localStorage.getItem("id");
@@ -68,7 +67,6 @@ export default function GroupChatWindow({ currentGroup, chatMsg, setChatMsg }) {
     return time;
   };
   const stringAvatar = (name) => {
-    // console.log("name", name);
     if (!name) return;
     return {
       children: `${name.split("")[0][0].toUpperCase()}`,
