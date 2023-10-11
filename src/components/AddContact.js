@@ -6,24 +6,18 @@ import { config } from "../config";
 import AuthContext from "../store/auth-context";
 // import AuthContext from "../store/auth-context";
 
-export default function AddContact({
-  setContactLists,
-  setOpen,
-  contactsLists,
-}) {
+export default function AddContact({ setContactLists, setOpen }) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState(false);
-  const userId = localStorage.getItem("id");
 
   const { user } = useContext(AuthContext);
 
   const addContact = async (e) => {
     e.preventDefault();
     const data = {
-      userId: userId,
+      userId: user._id,
       contact: {
-        id: user._id,
         username: userName,
         email,
       },
@@ -36,12 +30,8 @@ export default function AddContact({
       );
       console.log("ADDRESPONSE", response);
       if (response.status === 201) {
-        try {
-          setContactLists((prev) => [...prev, data]);
-          localStorage.setItem("contactLists", data);
-        } catch (err) {
-          console.log(err);
-        }
+        setContactLists((prev) => [...prev, data]);
+        localStorage.setItem("contactLists", data);
         setOpen(false);
         return;
       }

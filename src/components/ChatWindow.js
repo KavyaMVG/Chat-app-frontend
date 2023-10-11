@@ -10,7 +10,7 @@ import moment from "moment";
 import "../styles/Dashboard.css";
 import AuthContext from "../store/auth-context";
 
-const socket = io(``);
+const socket = io("http://localhost:8080");
 
 export default function ChatWindow({
   receiver,
@@ -34,8 +34,8 @@ export default function ChatWindow({
         receiverId: receiver.id,
         senderId,
       };
-      // socket.emit("message", { data });
-      // setMsg("");
+      socket.emit("message", { data });
+      setMsg("");
     } catch (err) {
       console.log(err);
     }

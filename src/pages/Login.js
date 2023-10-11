@@ -83,7 +83,7 @@ const Login = () => {
             </Button>
             <p style={{ color: "red", margin: "1rem" }}>{errorMessage}</p>
             <div className="text">
-              <Link to="/" className="link">
+              <Link to="/register" className="link">
                 Don't have an account? <Button>Register</Button>
               </Link>
             </div>

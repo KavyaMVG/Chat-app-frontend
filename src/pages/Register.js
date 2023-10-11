@@ -31,8 +31,9 @@ const Register = () => {
       });
       if (res.status === 201) {
         const { data } = res;
+        localStorage.setItem("user", JSON.stringify(data.user));
         setUser(data.user);
-        return navigate("/dashboard", { state: { data: data.user } });
+        return navigate("/dashboard");
       }
     } catch (err) {
       console.log(err);
