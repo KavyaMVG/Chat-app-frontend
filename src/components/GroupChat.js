@@ -42,10 +42,10 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
   const getContactList = async () => {
     try {
       const response = await axios.get(
-        `${config.API.baseURL}/contact/user?userId=${user.id}`,
+        `${config.API.baseURL}/contact/user?userId=${user._id}`,
         {
           headers: {
-            Authorization: localStorage.getItem("auth"),
+            Authorization: user.token,
           },
         }
       );
@@ -78,10 +78,9 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
       const memberCopy = [...members];
       const users = {
         name: firstName,
-        memberId: user.id,
+        memberId: user._id,
       };
       memberCopy.push(users);
-      console.log("memberCopy", users);
       setMembers(memberCopy);
 
       const response = await axios.post(
@@ -89,7 +88,7 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
         {
           name: groupName,
           members: memberCopy,
-          admin: user.id,
+          admin: user._id,
         }
       );
       const newGroup = response.data;
@@ -122,16 +121,15 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
   useEffect(() => {
     try {
       axios
-        .get(`${config.API.baseURL}/group/getgroup?admin=${user.id}`)
+        .get(`${config.API.baseURL}/group/getgroup?admin=${user._id}`)
         .then((response) => {
           const { data } = response;
-
           setGroupList(data.userGroupChat);
         });
     } catch (err) {
       console.log(err);
     }
-  }, [user.id]);
+  }, [user._id]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -183,7 +181,6 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
               placeholder="Group Subject"
               onChange={(e) => setGroupName(e.target.value)}
             />
-            {console.log("contactList", contactList)}
             {contactList &&
               contactList.map(({ contact }, index) => {
                 return (

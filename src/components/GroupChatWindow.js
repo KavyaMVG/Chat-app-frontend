@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import moment from "moment";
@@ -10,16 +10,16 @@ import Fade from "@mui/material/Fade";
 import { config } from "../config";
 
 import { useState, useEffect } from "react";
+import AuthContext from "../store/auth-context";
 
 export default function GroupChatWindow({ currentGroup, chatMsg, setChatMsg }) {
   const GroupChatWindow = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const { user } = useContext(AuthContext);
 
   const [groupMsg, setGroupMsg] = useState([]);
-  const senderId = localStorage.getItem("id");
-
-  console.log(currentGroup);
+  const senderId = user._id;
 
   const sendGroupMsg = async (e) => {
     e.preventDefault();
@@ -117,7 +117,6 @@ export default function GroupChatWindow({ currentGroup, chatMsg, setChatMsg }) {
                   senderId !== grpChat.senderId ? "message-receiver" : ""
                 }`}
               >
-                {console.log("heeex", grpChat.msg)}
                 <p className="chat-msg"> {grpChat.msg}</p>
                 <p className="chat-time"> {formateDate(grpChat.createdAt)}</p>
               </div>

@@ -28,7 +28,6 @@ export default function AddContact({ setContactLists, setOpen }) {
         `${config.API.baseURL}/contact/add`,
         data
       );
-      console.log("ADDRESPONSE", response);
       if (response.status === 201) {
         setContactLists((prev) => [...prev, data]);
         localStorage.setItem("contactLists", data);

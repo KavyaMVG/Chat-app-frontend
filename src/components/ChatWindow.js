@@ -5,12 +5,15 @@ import { useState } from "react";
 import io from "socket.io-client";
 import { useRef } from "react";
 import moment from "moment";
-import { config } from "../config";
+// import { config } from "../config";
 
 import "../styles/Dashboard.css";
 import AuthContext from "../store/auth-context";
 
-const socket = io(`${config.API.baseURL}:3000`);
+// Define the server URL
+const serverUrl = "http://localhost:9000";
+
+const socket = io(serverUrl);
 
 export default function ChatWindow({
   receiver,
