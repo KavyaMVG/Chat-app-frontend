@@ -88,7 +88,7 @@ export default function GroupChatWindow({ currentGroup, chatMsg, setChatMsg }) {
           style={{ color: "#000" }}
           onClick={handleClick}
         >
-          Members
+          Group
         </Button>
         <Menu
           id="fade-menu"

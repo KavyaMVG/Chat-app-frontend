@@ -62,21 +62,22 @@ input:focus {
 }
 .send {
   position: absolute;
-  bottom: 14%;
-  right: 1%;
+  bottom: 23%;
+  right: 2%;
   border: 0;
-  padding: 1rem 0.9rem;
+  padding: 0.7rem 1.5rem;
   background-color: #eff2f5;
   color: #000;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  border-radius: 5%;
 }
 
 .userInfo {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0 1rem;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.5rem;
+  border-bottom: 1px solid lightgrey;
 }
 .user {
   display: flex;

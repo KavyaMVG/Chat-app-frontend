@@ -74,7 +74,7 @@ export default function Chats({
         return (
           <div key={index} className="one-chat">
             <ListItem
-              onClick={() => handleCurrentReceiver(contact)}
+              onClick={(event) => handleCurrentReceiver(contact)}
               alignItems="flex-start"
             >
               <ListItemAvatar>

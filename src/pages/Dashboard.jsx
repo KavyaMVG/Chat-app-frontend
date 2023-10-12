@@ -127,23 +127,23 @@ const Dashboard = () => {
             </Fade>
           </Modal>
         </div>
-        <TabContext value={value}>
-          <TabList onChange={handleChange}>
+        <TabContext style={{ padding: 0}} value={value}>
+          <TabList style={{ padding: 0}} onChange={handleChange}>
             <Tab label="Contacts" value="1" />
             <Tab label="Groups" value="2" />
           </TabList>
           <TabPanel style={{ padding: 0}} value="1">
 
             <BottomNavigationAction
-              style={{ float: "right" }}
+              style={{ float: "right", padding:0}}
               label="person"
               value="person"
               onClick={handleOpen}
-              icon={<PersonAddIcon style={{fontSize:"2.2rem",
-               border:"1px solid #bdbdbd", 
-               backgroundColor:"#bdbdbd",
-               color:"#fff", 
-               borderRadius:"50%", 
+              icon={<PersonAddIcon style={{fontSize:"1.7rem",
+              //  border:"1px solid #bdbdbd", 
+              //  backgroundColor:"#bdbdbd",
+               color:"#000", 
+              //  borderRadius:"50%", 
                padding:"4px"}}/>}
             />
             <Chats

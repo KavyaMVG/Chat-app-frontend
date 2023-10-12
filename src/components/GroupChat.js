@@ -143,18 +143,18 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
   return (
     <div>
       <BottomNavigationAction
-        style={{ float: "right" }}
+        style={{ float: "right", padding: 0 }}
         label="person"
         value="person"
         onClick={handleOpen}
         icon={
           <GroupsIcon
             style={{
-              fontSize: "2.2rem",
-              border: "1px solid #bdbdbd",
-              backgroundColor: "#bdbdbd",
-              color: "#fff",
-              borderRadius: "50%",
+              fontSize: "1.7rem",
+              // border: "1px solid #bdbdbd",
+              // backgroundColor: "#bdbdbd",
+              color: "#000",
+              // borderRadius: "50%",
               padding: "4px",
             }}
           />
@@ -236,6 +236,7 @@ const GroupChat = ({ firstName, setCurrentGroup, setChatMsg }) => {
           <div>
             <div key={index} className="one-chat">
               <ListItem
+                style={{ alignItems: "center" }}
                 alignItems="flex-start"
                 onClick={() => handleCurrentGroup(group)}
               >
