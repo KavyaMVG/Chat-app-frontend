@@ -1,6 +1,6 @@
 const prod = {
   API: {
-    baseURL: "http://localhost:5500",
+    baseURL: "https://chat-app-ct3s.onrender.com",
   },
 };
 

@@ -11,7 +11,7 @@ import "../styles/Dashboard.css";
 import AuthContext from "../store/auth-context";
 
 // Define the server URL
-const serverUrl = "http://localhost:9000";
+const serverUrl = "https://chat-app-ct3s.onrender.com";
 
 const socket = io(serverUrl);
 
